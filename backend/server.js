@@ -17,8 +17,12 @@ app.get("/", (req, res) => {
     res.send("Hello minmobile")
 })
 
-//sig in
+//user sig in
 app.post("/api/user/signin", UserController.signIn);
+//user auth
+app.get("/api/user/info", UserController.info);
+//user new password
+app.put("/api/user/update", UserController.update);
 
 //company create data
 app.post("/api/company/create", CompanyController.create);

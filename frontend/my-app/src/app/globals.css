@@ -22,7 +22,7 @@
 }
 
 input {
-  @apply mt-1 p-2 rounded-md border-red-700 bg-slate-300 w-full;
+  @apply p-2 rounded-md border border-gray-600 w-full;
 }
 
 body {
