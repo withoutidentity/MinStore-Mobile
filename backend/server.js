@@ -6,7 +6,8 @@ const cors = require("cors");
 //controller
 const { UserController } = require("./controllers/UserController"); 
 const { CompanyController } = require("./controllers/CompanyController"); 
-const { ProductController } = require("./controllers/ProductController")
+const { ProductController } = require("./controllers/ProductController");
+const { SellController } = require("./controllers/SellController");
 
 //middleware
 app.use(cors());
@@ -37,6 +38,12 @@ app.get("/api/buy/list", ProductController.list);
 app.put("/api/buy/update/:id", ProductController.update); //:id คือ รับไอดี
 //delete product
 app.delete("/api/buy/remove/:id", ProductController.remove); 
+
+//
+//sell
+//
+//create data sell
+app.post("/api/sell/create", SellController.create);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
