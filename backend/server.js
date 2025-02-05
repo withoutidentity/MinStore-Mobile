@@ -44,6 +44,12 @@ app.delete("/api/buy/remove/:id", ProductController.remove);
 //
 //create data sell
 app.post("/api/sell/create", SellController.create);
+// list sell
+app.get("/api/sell/list", SellController.list);
+// remove some sell
+app.delete("/api/sell/remove/:id", SellController.remove);
+// confirm order
+app.get("/api/sell/confirm",SellController.confirm);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)

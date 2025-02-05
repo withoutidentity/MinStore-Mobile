@@ -32,11 +32,15 @@
                 })
             }
         } catch (error: any) {
-            Swal.fire({
-                title: 'Error',
-                text: error.message,
-                icon: 'error',
-            })
+            if (error.response.status === 401) {
+                alert('ชื่อผู้ใช้งาน หรือ รหัสผ่านไม่ถูกต้อง');
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: error.message,
+                    icon: 'error',
+                })
+            }
         }
     }
     return (
