@@ -64,3 +64,7 @@ body {
 .btn-delete {
   @apply bg-red-600 text-white px-3 py-2 rounded-md;
 }
+
+.form-control {
+  @apply p-2 rounded-md border border-gray-600 w-full;
+}

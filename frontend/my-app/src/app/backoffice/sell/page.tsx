@@ -21,11 +21,19 @@ export default function Page() {
             await axios.post(`${config.apiUrl}/sell/create`, payload);
             fetchData();
         } catch (error: any) {
-            Swal.fire({
-                icon: 'error',
-                title: 'เกิดข้อผิดพลาด',
-                text: error.message
-            });
+            if (error.response.status === 400) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ไม่พบรายการสินค้า',
+                    text: 'ไม่พบรายการสินค้า หรือไม่มีในสต๊อก'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'เกิดข้อผิดพลาด',
+                    text: error.message
+                });
+            }
         }
     }
 

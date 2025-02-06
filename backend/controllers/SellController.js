@@ -7,7 +7,10 @@ module.exports = {
             try {
                 const serial = req.body.serial;
                 const product = await prisma.product.findFirst({
-                    where: { serial: serial }
+                    where: { 
+                        serial: serial,
+                        status: 'instock' 
+                    }
                 });
 
                 if (!product)  {
@@ -65,7 +68,7 @@ module.exports = {
         },
         confirm: async (req, res) => {
             try {
-                const sells = await prisma.findMany({
+                const sells = await prisma.sell.findMany({
                     where: {
                         status: 'pending'
                     }
@@ -74,7 +77,7 @@ module.exports = {
                 for (const sell of sells) {
                     await prisma.product.update({
                         data: {
-                            status: 'old'
+                            status: 'sold'
                         },
                         where: {
                             id: sell.productId
@@ -91,6 +94,31 @@ module.exports = {
                     }
                 });
                 res.json({ message: 'success' });
+            } catch (error) {
+                res.status(500).json({ message: error.message });
+            }
+        },
+        dashboard: async (req, res) => {
+            try {
+                const income = await prisma.sell.aggregate({
+                    _sum: {
+                        price: true
+                    },
+                    where: {
+                        status: 'paid'
+                    }
+                });
+                const countRepair = await prisma.service.count();
+                const countSell = await prisma.sell.count({
+                    where: {
+                        status: 'paid'
+                    }
+                });
+                return res.json ({
+                    totalIncome: income._sum.price,
+                    totalRepair: countRepair,
+                    totalSale: countSell
+                });
             } catch (error) {
                 res.status(500).json({ message: error.message });
             }

@@ -33,6 +33,18 @@ module.exports = {
         },
         list: async (req, res) => {
             try {
+                const page = req.params.page ?? 1;
+                const limit = 5;
+                const skip = (page - 1) * limit;
+                const totalRows = await prisma.product.count({
+                    where: {
+                        status: {
+                            not: 'delete'
+                        }
+                    }
+                });
+                const totalPages = Math.ceil(totalRows/limit);
+
                 const products = await prisma.product.findMany({
                     orderBy: {
                         id: "desc", //เรียงไอดี เรียงตัวใหม่ไปเก่า
@@ -41,9 +53,11 @@ module.exports = {
                         status: {
                             not: 'delete' //เอาข้อมูลเฉพาะที่ไม่ใช่อยู่สถานะdelete
                         }
-                    }
+                    },
+                    skip: skip,
+                    take: limit
                 });
-                res.json(products);
+                res.json({ products, totalPages, page, totalRows });
             } catch (err) {
                 res.status(500).json({ error: err.message});
             }
