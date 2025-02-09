@@ -196,7 +196,7 @@ export default function Page() {
                 </table>
 
                 <div className="mt-5">
-                    <div>รายการทั้งหมด {products.length} รายการ</div>
+                    <div>รายการทั้งหมด {totalRows} รายการ</div>
                     <div>หน้า {page} จาก {totalPages}</div>
                     <div className="flex gap-1">
                         <button className="btn" onClick={() => setPage(1)}>
@@ -207,7 +207,8 @@ export default function Page() {
                             <i className="fa-solid fa-caret-left"></i>
                         </button>
                         {Array.from({ length: totalPages }, (_, i) => (
-                            <button className="btn" onClick={() => setPage(i+1)} key={i}>
+                            <button className={`btn ${(i+1) === page ? 'btn-active' : ''}`}  
+                                onClick={() => setPage(i+1)} key={i}>
                                 {i+1}
                             </button>
                         ))}
@@ -221,6 +222,7 @@ export default function Page() {
                     </div>
                 </div>
             </div>
+
             <Modal title="เพิ่มรายการ" isOpen={isOpen} onClose={handleCloseModal}>
                 <div>serial สินค้า</div>
                 <input type="text" value={serial} onChange={(e) => setSerial(e.target.value)} />

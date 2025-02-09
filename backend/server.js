@@ -61,6 +61,9 @@ app.delete("/api/sell/remove/:id", SellController.remove);
 app.get("/api/sell/confirm",SellController.confirm);
 //dashboard
 app.get("/api/sell/dashboard", SellController.dashboard);
+//history
+app.get("/api/sell/history", SellController.history);
+app.get("/api/sell/info/:id", SellController.info);
 
 //
 // Service
